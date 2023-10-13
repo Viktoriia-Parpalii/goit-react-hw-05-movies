@@ -1,10 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-
 const defaultImg =
   '<https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700>';
 
-const MovieItem = ({ movie }) => {
+const MovieCard = ({ movie }) => {
   const {
     title,
     name,
@@ -31,23 +29,13 @@ const MovieItem = ({ movie }) => {
       <p>{overview}</p>
       {genres && (
         <ul>
-          Genres
           {genres.map(genre => (
             <li key={genre.id}>{genre.name}</li>
           ))}
         </ul>
       )}
-      <ul>
-        Additional information
-        <li>
-          <NavLink>Casts</NavLink>
-        </li>
-        <li>
-          <NavLink>Reviews</NavLink>
-        </li>
-      </ul>
     </>
   );
 };
 
-export default MovieItem;
+export default MovieCard;

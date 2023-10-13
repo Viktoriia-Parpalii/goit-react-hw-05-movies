@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>Trending today</h1>
+      <h1 className="title">Trending today</h1>
       {loading && (
         <RotatingLines
           strokeColor="grey"

@@ -10,6 +10,18 @@ export const getAllMovies = async () => {
 };
 export const getMovieById = async movieId => {
   const { data } = await axios.get(`${BASE_URL}/movie/${movieId}`);
-  console.log(data);
+  return data;
+};
+
+export const getMovieCasts = async movieId => {
+  const { data } = await axios.get(`${BASE_URL}/movie/${movieId}/credits`);
+  return data;
+};
+export const getMovieReviews = async movieId => {
+  const { data } = await axios.get(`${BASE_URL}/movie/${movieId}/reviews`);
+  return data;
+};
+export const getMoviesbyQuery = async query => {
+  const { data } = await axios.get(`${BASE_URL}search/movie?query=${query}`);
   return data;
 };
