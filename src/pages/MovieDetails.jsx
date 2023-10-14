@@ -1,7 +1,5 @@
-import Cast from 'components/Cast/Cast';
 import MovieCard from 'components/MovieCard/MovieCard';
-import Reviews from 'components/Reviews/Reviews';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 import {
   NavLink,
@@ -12,6 +10,9 @@ import {
 } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { getMovieById } from 'services/getMovies';
+
+const Cast = lazy(() => import('components/Cast/Cast'));
+const Reviews = lazy(() => import('components/Reviews/Reviews'));
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -75,10 +76,22 @@ const MovieDetails = () => {
         pauseOnHover
         theme="colored"
       />
-      <Routes>
-        <Route path="cast" element={<Cast />} />
-        <Route path="reviews" element={<Reviews />} />
-      </Routes>
+      <Suspense
+        fallback={
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+          />
+        }
+      >
+        <Routes>
+          <Route path="cast" element={<Cast />} />
+          <Route path="reviews" element={<Reviews />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };
