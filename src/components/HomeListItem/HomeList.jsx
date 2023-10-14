@@ -1,14 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const defaultImg =
   '<https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700>';
 
 const HomeList = ({ movies }) => {
+  const location = useLocation();
+
   return (
     <ul className="movieLinkList">
       {movies.map(movie => (
-        <Link className="movieLink" key={movie.id} to={`/movies/${movie.id}`}>
+        <Link
+          state={{ from: location }}
+          className="movieLink"
+          key={movie.id}
+          to={`/movies/${movie.id}`}
+        >
           <li className="movieItem">
             <img
               src={
@@ -17,10 +24,11 @@ const HomeList = ({ movies }) => {
                   : defaultImg
               }
               width={130}
+              height={180}
               alt="poster"
             />
             <p>{movie.title ? movie.title : movie.name}</p>
-          </li>{' '}
+          </li>
         </Link>
       ))}
     </ul>

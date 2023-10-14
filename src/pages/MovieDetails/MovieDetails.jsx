@@ -1,9 +1,15 @@
 import Cast from 'components/Cast/Cast';
 import MovieCard from 'components/MovieCard/MovieCard';
 import Reviews from 'components/Reviews/Reviews';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
-import { NavLink, Route, Routes, useParams } from 'react-router-dom';
+import {
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { getMovieById } from 'services/getMovies';
 
@@ -12,8 +18,10 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
 
+  const location = useLocation();
+  const backLinkHref = useRef(location.state?.from ?? '/');
+
   useEffect(() => {
-    // console.log(movieId);
     const getmovie = async () => {
       try {
         if (!movieId) return;
@@ -32,7 +40,9 @@ const MovieDetails = () => {
 
   return (
     <>
-      {/* <NavLink to="/">Go Back</NavLink> */}
+      <NavLink className="backLink" to={backLinkHref.current}>
+        Go Back
+      </NavLink>
       {loading && (
         <RotatingLines
           strokeColor="grey"

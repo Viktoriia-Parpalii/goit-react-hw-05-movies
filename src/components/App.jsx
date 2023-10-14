@@ -3,7 +3,7 @@ import Home from 'pages/Home';
 import Header from './Header/Header';
 import Movies from 'pages/Movies';
 import MovieDetails from 'pages/MovieDetails/MovieDetails';
-import StyledContainer from './Container/Container';
+import StyledContainer from './Container/Container.styled';
 export const App = () => {
   return (
     <>

@@ -1,48 +1,72 @@
-// import React, { useEffect, useState } from 'react';
-// import { NavLink, useParams } from 'react-router-dom';
-// import { getMovieById } from 'services/getMovies';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-// import { RotatingLines } from 'react-loader-spinner';
-// import MovieDetails from 'pages/MovieDetails/MovieDetails';
-
-// import { useSearchParams } from 'react-router-dom';
+import HomeList from 'components/HomeListItem/HomeList';
+import { useEffect, useState } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
+import { useSearchParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { getMoviesbyQuery } from 'services/getMovies';
 
 const Movies = () => {
-  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [movies, setMovies] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   // console.log(movieId);
-  //   const getmovie = async () => {
-  //     try {
-  //       if (!movieId) return;
-  //       setLoading(true);
-  //       const data = await getMovieById(movieId);
-  //       setMovie(data);
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  const query = searchParams.get('query');
 
-  //   getmovie();
-  // }, [movieId]);
+  useEffect(() => {
+    const getmovie = async () => {
+      try {
+        if (!query) return;
+        setLoading(true);
+        const data = await getMoviesbyQuery(query);
+        setMovies(data.results);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getmovie();
+  }, [query]);
+
   const handleOnSubmit = e => {
     e.preventDefault();
     const searchQuery = e.currentTarget.elements.searchMovieByName.value;
-    console.log('searchQuery: ', searchQuery);
+    setSearchParams({ query: searchQuery });
     e.currentTarget.reset();
   };
+
   return (
     <>
-      <form onSubmit={handleOnSubmit}>
+      <form className="form" onSubmit={handleOnSubmit}>
         <label>
           <p>Search movie by name</p>
-          <input type="text" name="searchMovieByName" />
+          <input className="input" type="text" name="searchMovieByName" />
         </label>
-        <button>Submit</button>
+        <button className="btnSubmit">Submit</button>
       </form>
+      {loading && (
+        <RotatingLines
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="96"
+          visible={true}
+        />
+      )}
+      {movies.length > 0 && <HomeList movies={movies} />}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 };

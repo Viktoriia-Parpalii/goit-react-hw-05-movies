@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
     // vote_average,
   } = movie;
   return (
-    <>
+    <div className="MovieCard">
       <img
         src={
           poster_path
@@ -23,18 +23,20 @@ const MovieCard = ({ movie }) => {
         width={250}
         alt="poster"
       />
-      <h1>{title ? title : name}</h1>
-      <p>Popularity: {popularity}</p>
-      <h2>Overview</h2>
-      <p>{overview}</p>
-      {genres && (
-        <ul>
-          {genres.map(genre => (
-            <li key={genre.id}>{genre.name}</li>
-          ))}
-        </ul>
-      )}
-    </>
+      <div>
+        <h1>{title ? title : name}</h1>
+        <p>Popularity: {popularity}</p>
+        <h2>Overview</h2>
+        <p>{overview}</p>
+        {genres && (
+          <ul>
+            {genres.map(genre => (
+              <li key={genre.id}>{genre.name}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
   );
 };
 

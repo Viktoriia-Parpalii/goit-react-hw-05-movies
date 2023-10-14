@@ -19,10 +19,10 @@ export const StyledHeader = styled.header`
     padding: 6px 12px;
     border: 2px solid rgb(235, 187, 247);
     border-radius: 20px;
-  }
-  .active {
-    color: purple;
-  }
+
+    &.active {
+      color: purple;
+    }
 `;
 
 export default StyledHeader;
